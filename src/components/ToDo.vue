@@ -113,7 +113,7 @@ function saveTasks() {
             @click="addTask"
             class="px-4 bg-blue-500 text-white rounded-full hover:bg-blue-600 focus:outline-none"
           >
-            <i class="pi pi-plus"></i>
+            <i @click="addTask" class="pi pi-plus"></i>
           </button>
         </div>
       </div>
