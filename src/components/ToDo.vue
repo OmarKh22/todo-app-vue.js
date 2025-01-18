@@ -14,9 +14,15 @@ onMounted(() => {
 });
 
 const totalTasks = computed(() => tasks.value.length);
-const doneTasksCount = computed(
-  () => tasks.value.filter((task) => task.done).length
-);
+// const doneTasksCount = computed(
+//   () => tasks.value.filter((task) => task.done).length
+// );
+
+const doneTasksCount = computed(() => {
+  return Array.isArray(tasks.value)
+    ? tasks.value.filter((task) => task.done).length
+    : 0;
+});
 
 function addTask() {
   if (newTask.value.trim()) {
@@ -32,7 +38,7 @@ function removeTask(index) {
 }
 
 const deleteTasksDone = () => {
-  tasks.value = tasks.value.filter((task) => !task.done); 
+  tasks.value = tasks.value.filter((task) => !task.done);
   saveTasks();
 };
 
@@ -47,18 +53,26 @@ function saveTasks() {
 </script>
 <template>
   <section class="container py-24">
-    <h1 class="text-center text-5xl font-bold text-white pb-3">Vue ToDo List</h1>
-    <div class="bg-gray-50 p-5  h-[500px] max-w-xl mx-auto">
+    <h1 class="text-center text-5xl font-bold text-white pb-3">
+      Vue ToDo List
+    </h1>
+    <div class="bg-gray-50 p-5 h-[500px] max-w-xl mx-auto">
       <!-- buttons -->
       <div class="p-5 flex gap-5 text-white">
         <div class="bg-blue-600 p-2 rounded-lg">
           <button>
-            Tasks <span class="bg-white text-blue-600 p-1 rounded-full">{{ totalTasks }}</span>
+            Tasks
+            <span class="bg-white text-blue-600 p-1 rounded-full">{{
+              totalTasks
+            }}</span>
           </button>
         </div>
         <div class="bg-blue-600 p-2 rounded-lg">
           <button>
-            Tasks Done <span class="bg-white text-blue-600 p-1 rounded-full"> {{  doneTasksCount }}</span>
+            Tasks Done
+            <span class="bg-white text-blue-600 p-1 rounded-full">
+              {{ doneTasksCount }}</span
+            >
           </button>
         </div>
         <div class="bg-red-600 p-2 rounded">
@@ -113,7 +127,7 @@ function saveTasks() {
             @click="addTask"
             class="px-4 bg-blue-500 text-white rounded-full hover:bg-blue-600 focus:outline-none"
           >
-            <i @click="addTask" class="pi pi-plus"></i>
+            <i class="pi pi-plus"></i>
           </button>
         </div>
       </div>
