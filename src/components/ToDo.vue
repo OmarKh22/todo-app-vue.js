@@ -6,10 +6,17 @@ const newTask = ref("");
 
 onMounted(() => {
   const savedTasks = localStorage.getItem("tasks");
-  if (savedTasks) {
-    tasks.value = JSON.parse(savedTasks);
-  } else {
-    tasks.value = "";
+  // if (savedTasks) {
+  //   tasks.value = JSON.parse(savedTasks);
+  // } else {
+  //   tasks.value = "";
+  // }
+
+   try {
+    tasks.value = savedTasks ? JSON.parse(savedTasks) : []; 
+  } catch (error) {
+    console.error("Failed to parse tasks from localStorage:", error);
+    tasks.value = []; 
   }
 });
 
@@ -44,7 +51,7 @@ const deleteTasksDone = () => {
 
 function removeTasks(index) {
   tasks.value.splice(index);
-  savedTasks();
+  saveTasks();
 }
 
 function saveTasks() {
